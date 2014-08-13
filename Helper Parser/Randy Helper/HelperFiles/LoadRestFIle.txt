@@ -1,0 +1,32 @@
+</form>
+</body>
+</html>
+<%--This is to maintain scroll on postback--%>
+<script type="text/javascript">
+    var t;
+
+    function scrollSelectedRecord() {
+        if (typeof (grid1) == 'undefined') {
+            t = window.setTimeout("scrollSelectedRecord()", 500);
+            return;
+        }
+        if (grid1 != null) {
+            if (grid1.Rows != null) {
+                if (grid1.PageSelectedRecords != null && grid1.PageSelectedRecords.length > 0) {
+                    for (var i = 0; i < grid1.Rows.length; i++) {
+                        if (grid1.Rows[i].Cells['SupplierID'].Value == grid1.PageSelectedRecords[0].SupplierID) {
+                            grid1.GridBodyContainer.firstChild.firstChild.childNodes[1].childNodes[i].scrollIntoView(true);
+                        }
+                    }
+                }
+            } else {
+                t = window.setTimeout("scrollSelectedRecord()", 500);
+                return;
+            }
+
+            window.clearTimeout(t);
+        }
+    }
+    scrollSelectedRecord();
+
+</script>

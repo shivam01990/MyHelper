@@ -1,0 +1,15 @@
+c:\documents and settings\laitkor\my documents\visual studio 2010\Projects\Randy Helper\Randy Helper\bin\Debug\Randy Helper.exe
+c:\documents and settings\laitkor\my documents\visual studio 2010\Projects\Randy Helper\Randy Helper\bin\Debug\Randy Helper.pdb
+c:\documents and settings\laitkor\my documents\visual studio 2010\Projects\Randy Helper\Randy Helper\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\documents and settings\laitkor\my documents\visual studio 2010\Projects\Randy Helper\Randy Helper\obj\x86\Debug\Randy Helper.exe
+c:\documents and settings\laitkor\my documents\visual studio 2010\Projects\Randy Helper\Randy Helper\obj\x86\Debug\Randy Helper.pdb
+G:\Randy Helper\Randy Helper\obj\x86\Debug\Randy Helper.exe
+G:\Randy Helper\Randy Helper\obj\x86\Debug\Randy Helper.pdb
+G:\Randy Helper\Randy Helper\bin\Debug\Randy Helper.exe
+G:\Randy Helper\Randy Helper\bin\Debug\Randy Helper.pdb
+G:\Randy Helper\Randy Helper\obj\x86\Debug\Randy Helper.csprojResolveAssemblyReference.cache
+F:\randyobouttasks\Randy Helper Parser\Randy Helper\obj\x86\Debug\Randy Helper.exe
+F:\randyobouttasks\Randy Helper Parser\Randy Helper\obj\x86\Debug\Randy Helper.pdb
+F:\randyobouttasks\Randy Helper Parser\Randy Helper\bin\Debug\Randy Helper.exe
+F:\randyobouttasks\Randy Helper Parser\Randy Helper\bin\Debug\Randy Helper.pdb
+F:\randyobouttasks\Randy Helper Parser\Randy Helper\obj\x86\Debug\Randy Helper.csprojResolveAssemblyReference.cache

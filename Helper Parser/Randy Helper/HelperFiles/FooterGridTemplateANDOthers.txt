@@ -1,0 +1,113 @@
+</Columns>
+        <TemplateSettings RowEditTemplateId="tplRowEdit" />
+        <Templates>
+       <cc1:GridTemplate runat="server" ID="tplRowEdit">
+                    <Template>
+                        <div align="center" id="mains" class="main">
+                            <div class="maindiv">
+                                <div align="center" class="leftdiv">
+                                    <fieldset>
+                                        <legend>Front of Card</legend>
+                                        <div class="width100percent  fontbold fontsizelarge centertextalign">
+                                          Title of Form 
+                                        </div>
+                                        <div class="width100percent  fontbold  centertextalign">
+                                            <i>"Sub Title"</i>
+                                            <hr style="width: 60%;" />
+                                        </div>
+                                        <div class=" centertextalign width100percent floatLeft">
+                                            <div style="text-align: center; padding-top: 8px; padding-bottom: 10px;">
+                                                <b>iCount:</b>&nbsp;&nbsp;<span id="lbliCount"></span>
+                                                <br />
+                                                <b>Image File:</b>&nbsp;&nbsp;<span id="lblImageFiles" style="width: 100%;"></span>
+                                                <br />
+                                                <br />
+                                                <b>Safe/At Risk Card:</b>&nbsp;&nbsp;<cc1:OboutTextBox ID="txt_Safe_AtRisk_Card"
+                                                    runat="server" Width="30"></cc1:OboutTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="width100percent floatLeft">
+                                            <hr style="width: 60%;" />
+                                            Action Required<hr style="width: 60%;" />
+                                            <br />
+                                        </div>
+
+                                        <div class="width100percent lefttextalign">
+                                            <div class="width25percent">
+                                                <label>Date</label><br />
+                                                <cc1:OboutTextBox runat="server" ID="txtDate" Width="80" FolderStyle="styles/premiere_blue/OboutTextBox"
+                                                    Text='<%# Container.Value %>' /><obout:Calendar ID="Calendar2" runat="server" StyleFolder="Calendar/styles/expedia"
+                                                        DatePickerMode="true" TextBoxId="txtDate" TextArrowLeft="" TextArrowRight=""
+                                                        DatePickerSynchronize="true" DatePickerImagePath="Calendar/styles/icon2.gif"
+                                                        DateFormat="MM/dd/yyyy" EnableViewState="true" AllowDeselect="false" />
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txtDate"
+                                                    runat="server" ErrorMessage="*" ForeColor="Red">
+                                                </asp:RequiredFieldValidator>
+                                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtDate"
+                                                    Display="Dynamic" EnableClientScript="true" runat="server" ValidationExpression="^([0-9]{1,2})[./-]+([0-9]{1,2})[./-]+([0-9]{2}|[0-9]{4})$"
+                                                    SetFocusOnError="true" ForeColor="Red">
+                                                Please enter date in mm/dd/yyyy format
+                                                </asp:RegularExpressionValidator>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+
+                                <div style="float: left; width: 700px; height: 10px; overflow: visible;">
+                                    <fieldset style="width: auto; height: auto; text-align: left; background-color: #EBECEC;">
+                                        <legend>Card Image: Front</legend>
+                                        <asp:Image ID="CardImageFront" runat="server" />
+                                    </fieldset>
+                                </div>
+                            </div>
+
+
+
+
+                            <div style="width: 100%; float: left; min-height: 30px; background-color: #EBECEC; color: #666666;">
+                                <br />
+                                <hr />
+                            </div>
+                            <div align="center" style="background-color: #EBECEC; color: #666666; float: left; width: 100%; height: auto;">
+                                <div class="leftdiv">
+                                    <fieldset style="width: auto; height: auto; text-align: left; background-color: #EBECEC;">
+                                        <legend>Back of Card</legend>
+                                        
+                                    </fieldset>
+                                </div>
+                                <div style="float: left; width: 700px; height: 10px; overflow: visible;">
+                                    <fieldset style="width: auto; height: auto; background-color: #EBECEC; text-align: left;">
+                                        <legend>Card Image: Back</legend>
+                                        <asp:Image ID="CardImageBack" runat="server" />
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="hdn_Field1" />
+                        <input type="hidden" id="hdn_Field2" />
+                        <input type="hidden" id="hdn_Field3" />
+                        <input type="hidden" id="hdn_Field4" />
+                        <input type="hidden" id="hdn_Field5" />
+                        <input type="hidden" id="hdn_Field6" />
+                        <input type="hidden" id="hdn_Field7" />
+                        <input type="hidden" id="hdn_Field8" />
+            
+
+                    </Template>
+                </cc1:GridTemplate>
+                <cc1:GridTemplate runat="server" ID="tplImageURL">
+                    <Template>
+                        <span style="width: 50px;"><a href="<%# GetFullUrl(Container.DataItem["image_url"].ToString()) %>"
+                            target="_blank">Form Image</a></span>
+                    </Template>
+                </cc1:GridTemplate>
+                <cc1:GridTemplate runat="server" ID="Template1">
+                    <Template>
+                        <span>
+                            <%# Container.Value %></span>
+                    </Template>
+                </cc1:GridTemplate>
+
+        </Templates>
+    </cc1:Grid>

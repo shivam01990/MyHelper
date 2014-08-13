@@ -1,0 +1,276 @@
+<%@ Page Language="C#" Debug="true" ValidateRequest="false" MaintainScrollPositionOnPostback="True" %>
+
+<%@ Register Assembly="obout_Grid_NET" Namespace="Obout.Grid" TagPrefix="cc1" %>
+<%@ Register Assembly="obout_Interface" Namespace="Obout.Interface" TagPrefix="cc1" %>
+<%@ Register Assembly="obout_Calendar2_Net" Namespace="OboutInc.Calendar2" TagPrefix="obout" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Configuration" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<script type="text/javascript">
+  String.prototype.trim = function () {
+        return this.replace(/^\s+|\s+$/g, '');
+    }
+    function Grid1_BeforeEdit(sender, record) {
+        var Url = record.Image_URL;
+        if ((Url != null) || (Url != "")) {
+            var stindex = Url.indexOf('href="');
+            if (stindex == -1) {
+                stindex = Url.indexOf('href=');
+                stindex += 8;
+            }
+            else {
+                stindex += 6;
+            }
+            var endindex = Url.indexOf('">');
+            if (endindex == -1) {
+                endindex = Url.indexOf('.tif');
+                endindex += 4;
+            }
+            Url = Url.substring(stindex, endindex);
+            document.getElementById("Grid1_tplRowEdit_ctl00_CardImageFront").src = "TifHandler.ashx?imageURL=" + Url + "&pageNum=1" + "&rotation=0";
+            document.getElementById("Grid1_tplRowEdit_ctl00_CardImageBack").src = "TifHandler.ashx?imageURL=" + Url + "&pageNum=2" + "&rotation=0";
+        }
+        //Automation for Radio Buttons
+        var RadiobuttonArray = [];
+        RadiobuttonArray = GetAllRadioButtons();
+        var i = 0;
+        var j = 0;
+        for (j = 0; j < RadiobuttonArray.length; j++) {
+            var str = RadiobuttonArray[j];
+            var index = str.indexOf('lst_');
+            if (index != -1) {
+                var radioname = RadiobuttonArray[j].substring(index + 4, RadiobuttonArray[j].length);
+                var data = eval('record.' + radioname);
+                var val = document.getElementsByName(RadiobuttonArray[j]);
+                GetValueFromHiddenField(data, val);
+            }
+        }
+        //Automation for Check Boxes
+        //debugger;
+        var CheckBoxArray = [];
+        CheckBoxArray = GetAllCheckBox();
+        i = 0;
+        j = 0;
+        var MatchCaseValue = "X";
+        for (j = 0; j < CheckBoxArray.length; j++) {
+            
+            var str = CheckBoxArray[j];
+            var index = str.indexOf('chk_');
+            if (index != -1) {
+                var checkboxname = CheckBoxArray[j].substring(index + 4, CheckBoxArray[j].length);
+                var data = eval('record.' + checkboxname);
+                //var val = document.getElementsByName(CheckBoxArray[j]);
+
+                if (data.trim().toLowerCase() == MatchCaseValue.toLowerCase()) {
+                    checkCheckBox("chk_" + checkboxname);
+                }
+                else {
+                    UNcheckCheckBox("chk_" + checkboxname);
+                }
+            }
+        }
+
+
+
+        return true;
+    }
+
+    function GetAllRadioButtons() {
+        var inputs = document.forms["form1"].getElementsByTagName("input");
+        var radioes = [];
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type == 'radio') {
+                radioes.push(inputs[i].name);
+            }
+        }
+        var arr = DistinctArray(radioes);
+        return arr;
+    }
+
+    function GetAllCheckBox() {
+        var inputs = document.forms["form1"].getElementsByTagName("input");
+        var radioes = [];
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type == 'checkbox') {
+                radioes.push(inputs[i].name);
+            }
+        }
+        var arr = DistinctArray(radioes);
+        return arr;
+    }
+
+    function DistinctArray(Array) {
+        var arr = [];
+        for (var i = 0; i < Array.length; i++) {
+            if (arr.indexOf(Array[i]) == -1) {
+                arr.push(Array[i]);
+            }
+        }
+        return arr;
+    }
+
+
+    function PassTextDatatoDropDown(ddlId, desiredValue) {
+        var Dropdownid = eval(ddlId);
+
+        for (var i = 0; i < Dropdownid.options.length; i++) {
+            if (Dropdownid.options[i].text.toLowerCase() == desiredValue.toLowerCase()) {
+                Dropdownid.selectedIndex(i);
+                //  Dropdownid.SelectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    function PassValueDatatoDropDown(ddlId, desiredValue) {
+        var Dropdownid = eval(ddlId);
+
+        for (var i = 0; i < Dropdownid.options.length; i++) {
+            if (Dropdownid.options[i].value.toLowerCase() == desiredValue.toLowerCase()) {
+                Dropdownid.selectedIndex(i);
+                //  Dropdownid.SelectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    function GetSelectedTextFromDropDown(DropdownId) {
+        var ddlId = eval(DropdownId);
+        var returntxt = "";
+        var val = ddlId.value()
+        for (var i = 0; i < ddlId.options.length; i++) {
+            if (ddlId.options[i].value == val) {
+                returntxt = ddlId.options[i].text;
+                //  Dropdownid.SelectedIndex = i;
+                break;
+            }
+        }
+
+        return returntxt;
+
+    }
+
+    function OnBeforeUpdate(record) {
+
+        var RadiobuttonArray = [];
+        RadiobuttonArray = GetAllRadioButtons();
+        var j = 0;
+        for (j = 0; j < RadiobuttonArray.length; j++) {
+            var str = RadiobuttonArray[j];
+            var index = str.indexOf('lst_');
+            if (index != -1) {
+                var radioname = RadiobuttonArray[j].substring(index + 4, RadiobuttonArray[j].length);
+                var hdnfieldid = "hdn_" + radioname;
+                var val = document.getElementsByName(RadiobuttonArray[j]);
+                GetValueFromRadiobuttonList(val, hdnfieldid);
+            }
+        }
+
+        var CheckBoxArray = [];
+        CheckBoxArray = GetAllCheckBox();
+        j = 0;
+        var MatchCaseValue = "X";
+        for (j = 0; j < CheckBoxArray.length; j++) {
+            var str = CheckBoxArray[j];
+            var index = str.indexOf('chk_');
+            if (index != -1) {
+                var Checkname = CheckBoxArray[j].substring(index + 4, CheckBoxArray[j].length);
+                var hdnfieldid = "hdn_" + Checkname;
+                var val = document.getElementsByName(RadiobuttonArray[j]);
+
+                if (IsCheckboxCheck("chk_" + Checkname)) {
+                    document.getElementById(hdnfieldid).value = MatchCaseValue;
+                }
+                else {
+                    document.getElementById(hdnfieldid).value = "";
+                }
+            }
+        }
+
+        //  checkboxes
+
+        // if (IsCheckboxCheck("chk_Feedback_Given")) {
+        //     document.getElementById("hdn_Feedback_Given").value = "Y";
+        // }
+        // else {
+        //     document.getElementById("hdn_Feedback_Given").value = "";
+        // }
+
+
+    }
+
+
+
+
+    function GetValueFromHiddenField(data, val) {
+        for (i = 0; i < val.length; i++) {
+            if (val[i].value == data.trim()) {
+                val[i].checked = true;
+            } else { val[i].checked = false; }
+        }
+    }
+
+    function GetValueFromRadiobuttonList(val, hdnid) {
+        for (var i = 0; i < val.length; i++) {
+            if (val[i].checked == true) {
+                document.getElementById(hdnid).value = val[i].value;
+            }
+        }
+    }
+
+    function checkCheckBox(checkBoxId) {
+        var checkBox = eval(checkBoxId);
+        checkBox.checked(true);
+    }
+
+    function UNcheckCheckBox(checkBoxId) {
+        var checkBox = eval(checkBoxId);
+        checkBox.checked(false);
+    }
+
+    function IsCheckboxCheck(checkBoxId) {
+        var checkBox = eval(checkBoxId);
+        var isChecked = checkBox.checked();
+        return isChecked;
+    }
+</script>
+<script runat="server">
+    String aff_key = string.Empty;
+    String admin_id = string.Empty;
+    String date1Str = string.Empty;
+    String date2Str = string.Empty;
+    String backURL = string.Empty;
+    String report_filter_term = string.Empty;
+    String report_filter = string.Empty;
+    String testStr = string.Empty;
+
+    void Page_Load(object sender, EventArgs e)
+    {
+        aff_key = Request.QueryString["aff_key"] != null ? Request.QueryString["aff_key"] : string.Empty;
+        admin_id = Request.QueryString["sid"] != null ? Request.QueryString["sid"] : string.Empty;
+        date1Str = Request.QueryString["date1"] != null ? Request.QueryString["date1"] : string.Empty;
+        date2Str = Request.QueryString["date2"] != null ? Request.QueryString["date2"] : string.Empty;
+        backURL = Request.QueryString["backURL"] != null ? Request.QueryString["backURL"] : string.Empty;
+        report_filter = Request.QueryString["report_filter"] != null ? Request.QueryString["report_filter"] : string.Empty;
+        report_filter_term = Request.QueryString["report_filter_term"] != null ? Request.QueryString["report_filter_term"] : string.Empty;
+
+        SqlDataSource1.SelectParameters["affiliate_key"].DefaultValue = aff_key;
+        SqlDataSource1.SelectParameters["sid"].DefaultValue = admin_id;
+        SqlDataSource1.SelectParameters["start_date"].DefaultValue = date1Str;
+        SqlDataSource1.SelectParameters["end_date"].DefaultValue = date2Str;
+
+        if (report_filter_term.Length > 0)
+        {
+            SqlDataSource1.SelectParameters["filter"].DefaultValue = report_filter;
+            SqlDataSource1.SelectParameters["filter_value"].DefaultValue = report_filter_term;
+        }
+
+        //Set it so page doesn't cache
+        System.Web.UI.HtmlControls.HtmlMeta META = new System.Web.UI.HtmlControls.HtmlMeta();
+        META.HttpEquiv = "Pragma";
+        META.Content = "no-cache";
+        Page.Header.Controls.Add(META);
+        Response.Expires = -1;
+        Response.CacheControl = "no-cache";
+    }

@@ -1,0 +1,42 @@
+Generate Hidden Field Online by Program 
+http://www.compileonline.com/compile_csharp_online.php
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        // Read in every line in the file.
+        using (StreamReader reader = new StreamReader("input.txt"))
+        {
+            string line;
+            StringBuilder str = new StringBuilder();
+            while ((line = reader.ReadLine()) != null)
+            {
+                           
+                 str.Append(line);
+            
+            }
+            string strnew = str.ToString().Replace(System.Environment.NewLine, " ");
+            Console.WriteLine(strnew);
+             List<string> lstColumns = new List<string>();
+              lstColumns = strnew.Split(',').ToList();
+              
+               foreach (string col in lstColumns)
+            {
+                string CurrCol = col.Replace('[', ' ');
+                CurrCol = CurrCol.Replace(']', ' ').Trim();
+               
+                  Console.WriteLine("<input type='hidden' id='hdn_"+CurrCol+"' />");  
+               
+            }
+        }
+    }
+}

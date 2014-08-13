@@ -1,0 +1,213 @@
+public string GetFullUrl(string imgURL)
+    {
+        if (imgURL.Contains("<a"))
+        {
+            var regex = new Regex("<a [^>]*href=(?:'(?<href>.*?)')|(?:\"(?<href>.*?)\")", RegexOptions.IgnoreCase);
+            imgURL = regex.Matches(imgURL).OfType<Match>().Select(m => m.Groups["href"].Value).SingleOrDefault();
+        }
+
+        if (imgURL.ToLower().Contains("rptimages"))
+        {
+            imgURL = System.IO.Path.Combine("http://www.datainfoportal.com" + imgURL.Replace("\\", "/"));
+        }
+        else
+        {
+            imgURL = System.IO.Path.Combine("http://www.datainfoportal.com/RptImages" + imgURL.Replace("\\", "/"));
+        }
+
+        return imgURL;
+    }
+
+  
+</script>
+<head id="Head1" runat="server">
+    <title>Conoco Phillips Focused Audit Edit Panel</title>
+    <link href="Styles/premiere_blue/style.css" rel="stylesheet" />
+    <link href="Calendar/styles/expedia/style.css" rel="stylesheet" />
+	<!--[if lte IE 8]>
+	<script type="text/javascript" src="Styles/array-0.9.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        html, body, form {
+            height: 96%;
+            font-family: arial, helvetica, sans-serif;
+            font-size: 12px;
+            padding: 0;
+            margin: 5px;
+            background-color: #CCCCCC;
+        }
+
+        .main {
+            background-color: #EBECEC;
+        }
+
+        .maindiv {
+            background-color: #EBECEC;
+            color: #666666;
+            width: 100%;
+            float: left;
+        }
+
+        .verticalLine {
+            border-left: 1px solid black;
+            float: left;
+        }
+
+        .leftdiv {
+            float: left;
+            width: 550px;
+        }
+
+        .margintop10pixel {
+            margin-top: 10px;
+        }
+
+        .margintop5pixel {
+            margin-top: 5px;
+        }
+
+        .width50percent {
+            width: 50%;
+            float: left;
+        }
+
+        .width55percent {
+            width: 55%;
+            float: left;
+        }
+
+        .width60percent {
+            width: 60%;
+            float: left;
+        }
+
+        .width40percent {
+            width: 40%;
+            float: left;
+        }
+
+        .width10percent {
+            width: 10%;
+            float: left;
+        }
+
+        .width15percent {
+            width: 15%;
+            float: left;
+        }
+
+        .width20percent {
+            width: 20%;
+            float: left;
+        }
+
+        .width25percent {
+            width: 25%;
+            float: left;
+        }
+
+        .width5percent {
+            width: 5%;
+            float: left;
+        }
+
+        .width30percent {
+            width: 30%;
+            float: left;
+        }
+
+        .width32percent {
+            width: 32%;
+            float: left;
+        }
+
+        .width35percent {
+            width: 35%;
+            float: left;
+        }
+
+        .width100percent {
+            width: 100%;
+            float: left;
+        }
+
+        .height50pixel {
+            height: 30px;
+        }
+
+        .floatleft {
+            float: left;
+        }
+
+        .fontbold {
+            font-weight: bold;
+        }
+
+        .lefttextalign {
+            text-align: left;
+        }
+
+        .righttextalign {
+            text-align: right;
+        }
+
+        .centertextalign {
+            text-align: center;
+        }
+
+        .fontsizelarge {
+            font-size: medium;
+        }
+
+        .linespace {
+            height: 40px;
+            width: 100%;
+        }
+
+        .smalllinespace {
+            height: 10px;
+            width: 100%;
+        }
+
+        .radiobuttonlistcatch {
+            display: block;
+        }
+
+        .padding2px {
+            padding: 2px;
+        }
+
+        .HorizontalLine {
+            border-bottom: 3px solid black;
+            float: left;
+        }
+
+        .customStyle1 {
+            position: absolute !important;
+            left: 0px !important;
+            top: 0px !important;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div style="width: 100%; margin: 0 auto;">
+        <h3 style="text-decoration: underline; text-align: center; color: white;">
+            Conoco Phillips Focused Audit Edit Panel</h3>
+    </div>
+    <div>
+        <a href="<%=backURL%>" id="backurl"><u>CLICK HERE TO RETURN</u></a>
+    </div>
+    <cc1:Grid ID="Grid1" runat="server" Serialize="false" EnableRecordHover="true" EmbedFilterInSortExpression="True"
+        AllowAddingRecords="false" AllowColumnResizing="false" AllowGrouping="True" AllowPaging="true"
+        AllowSorting="true" Height="100%" Width="100%" PageSize="50" AllowFiltering="True"
+        AllowRecordSelection="true" ShowGroupFooter="True" ShowGroupsInfo="True" AllowColumnReordering="True"
+        ShowTotalNumberOfPages="True" AutoGenerateColumns="false" FolderStyle="Styles/style_13"
+        DataSourceID="SqlDataSource1" OnUpdateCommand="UpdateRecord">
+        <ClientSideEvents OnClientEdit="Grid1_BeforeEdit" OnBeforeClientUpdate="OnBeforeUpdate"
+            ExposeSender="true" />
+        <ScrollingSettings ScrollWidth="100%" ScrollHeight="100%" ScrollLeft="0" ScrollTop="0" />
+        <Columns>
+		<cc1:Column ID="Column0" HeaderText="EDIT" Width="115" AllowEdit="true" AllowDelete="false"
+                runat="server" />
